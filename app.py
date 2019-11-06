@@ -3,14 +3,15 @@ from pyramid.config import Configurator
 from pyramid.response import Response
 from pyramid.view import view_config
 
-@view_config(route_name='hello_world')
+@view_config(route_name='hello_world', renderer='hello.jinja2')
 def hello(request):
-  return Response('hello world')
+  return dict(name='world')
 
 
 # start by just running it with python app.py
 if __name__ == "__main__":
   config = Configurator()
+  config.include('pyramid_jinja2')
   config.add_route('hello_world', '/')   
   # config.add_view(hello, route_name='hello_world')
 
