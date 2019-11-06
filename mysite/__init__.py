@@ -1,13 +1,5 @@
-from wsgiref.simple_server import make_server
+
 from pyramid.config import Configurator
-from pyramid.response import Response
-from pyramid.view import view_config
-
-
-@view_config(route_name='list', renderer='list.jinja2')
-def list(request):
-  return dict()
-
 
 def main(global_config, **settings):
   config = Configurator(settings=settings)
