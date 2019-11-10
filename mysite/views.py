@@ -1,4 +1,4 @@
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config, notfound_view_config
 
 # pyramid finds the class instantiated it then finds the method to use
@@ -28,7 +28,10 @@ class MySite:
 
   @view_config(route_name='view', renderer='templates/view.jinja2')
   def view(self):
-    current = self.request.matchdict.get('id')
+    # simulating failing to find a database entry
+    if self.current != '1':
+      raise HTTPNotFound()
+    # current = self.request.matchdict.get('id')
     return dict(current=current)
 
 
@@ -52,3 +55,8 @@ class MySite:
     url = self.request.route_url('list')
     # Redirects.
     return HTTPFound(url)
+
+  
+  @notfound_view_config(renderer='templates/notfound.jinja2')
+  def not_found(self):
+    return dict()
